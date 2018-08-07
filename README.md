@@ -1,4 +1,4 @@
-# Plex macOS app
+# Google Voice macOS app
 
 This is a simple wrapper for the Google Voice web app for macOS.
 
