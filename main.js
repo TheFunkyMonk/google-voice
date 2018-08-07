@@ -1,16 +1,77 @@
 // Modules to control application life and create native browser window
-const {app, BrowserWindow} = require('electron')
+const {app, BrowserWindow, Menu} = require('electron');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let mainWindow
+let mainWindow;
+
+const menuTemplate = [{
+  label: 'Google Voice',
+  submenu: [{
+    label: 'About Google Voice',
+    role: 'about',
+  }, {
+    type: 'separator',
+  }, {
+    label: 'Hide Google Voice',
+    accelerator: 'Command+H',
+    role: 'hide',
+  }, {
+    label: 'Quit Google Voice',
+    accelerator: 'Command+Q',
+    role: 'quit',
+  }]
+}, {
+  label: "Edit",
+  submenu: [
+      { label: "Undo", accelerator: "CmdOrCtrl+Z", selector: "undo:" },
+      { label: "Redo", accelerator: "Shift+CmdOrCtrl+Z", selector: "redo:" },
+      { type: "separator" },
+      { label: "Cut", accelerator: "CmdOrCtrl+X", selector: "cut:" },
+      { label: "Copy", accelerator: "CmdOrCtrl+C", selector: "copy:" },
+      { label: "Paste", accelerator: "CmdOrCtrl+V", selector: "paste:" },
+      { label: "Select All", accelerator: "CmdOrCtrl+A", selector: "selectAll:" }
+]}, {
+  label: 'View',
+  submenu: [{
+    label: 'Reload',
+    accelerator: 'Command+R',
+    click: (menuItem, mainWindow) => {
+      if (mainWindow) {
+        mainWindow.reload();
+      }
+    },
+  }],
+}];
 
 function createWindow () {
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 800, height: 600})
+  mainWindow = new BrowserWindow({
+    titleBarStyle: 'hidden',
+    width: 1000,
+    height: 800
+  })
+  Menu.setApplicationMenu(Menu.buildFromTemplate(menuTemplate));
 
   // and load the index.html of the app.
-  mainWindow.loadFile('index.html')
+  // mainWindow.loadFile('index.html')
+  mainWindow.loadURL('https://voice.google.com');
+
+  mainWindow.webContents.on('did-finish-load', () => {
+    mainWindow.webContents.insertCSS(`
+      header {
+        padding-top: 1em;
+        -webkit-user-select: none;
+        -webkit-app-region: drag;
+      }
+      header a {
+        -webkit-app-region: no-drag;
+      }
+      body > div.gvPageRoot {
+        padding-top: 1.5em;
+      }
+    `);
+  });
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()

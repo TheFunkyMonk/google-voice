@@ -1,0 +1,30 @@
+{
+  "name": "electron-quick-start",
+  "version": "1.0.0",
+  "description": "A minimal Electron application",
+  "main": "main.js",
+  "scripts": {
+    "package": "$(npm bin)/electron-packager . Voice --platform=darwin --arch=x64 --icon=./public/googlevoice.icns --app-version=0.1.0 --app-bundle-id=no.rjlacount.googlevoice --helper-bundle-id=no.rjlacount.googlevoice.helper --out ./dist --overwrite",
+    "start": "electron ."
+  },
+  "repository": "https://github.com/electron/electron-quick-start",
+  "keywords": [
+    "Electron",
+    "quick",
+    "start",
+    "tutorial",
+    "demo"
+  ],
+  "author": "GitHub",
+  "license": "CC0-1.0",
+  "devDependencies": {
+    "electron": "^2.0.0",
+    "electron-packager": "^8.7.1"
+  },
+  "dependencies": {
+    "electron-compile": "^6.4.1",
+    "electron-compilers": "^5.9.0",
+    "electron-push-receiver": "^2.0.0",
+    "push-receiver": "^2.0.0"
+  }
+}
